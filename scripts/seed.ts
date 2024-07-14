@@ -137,7 +137,6 @@ const main = async () => {
     await db.insert(schema.challenges).values([
       {
         id: 1,
-        title: "Challenge 1",
         type: "SELECT",
         question:
           "What is the standard unit of force in the International System of Units (SI)?",
@@ -146,7 +145,6 @@ const main = async () => {
       },
       {
         id: 2,
-        title: "Challenge 2",
         type: "SELECT",
         question:
           "Which physical quantity describes the amount of matter in an object?",
@@ -155,7 +153,6 @@ const main = async () => {
       },
       {
         id: 3,
-        title: "Challenge 3",
         type: "SELECT",
         question:
           "Which of the following is the unit of mass in the International System of Units (SI)?",
