@@ -159,17 +159,56 @@ const main = async () => {
         lessonId: 4,
         order: 3,
       },
+      {
+        id: 4,
+        type: "SELECT",
+        question: "Which one of these is the correct equation of motion?",
+        lessonId: 5,
+        order: 4,
+      },
     ]);
 
     await db.insert(schema.challengeOptions).values([
-      { id: 1, challengeId: 1, text: "N", correct: false },
-      { id: 2, challengeId: 1, text: "kg", correct: true },
-      { id: 3, challengeId: 1, text: "sec", correct: false },
-      { id: 4, challengeId: 1, text: "meter", correct: false },
+      {
+        id: 1,
+        challengeId: 1,
+        text: "N",
+        correct: true,
+        audioSrc: "/newton.mp3",
+      },
+      {
+        id: 2,
+        challengeId: 1,
+        text: "kg",
+        correct: false,
+        audioSrc: "/kilogram.mp3",
+      },
+      {
+        id: 3,
+        challengeId: 1,
+        text: "sec",
+        correct: false,
+        audioSrc: "/second.mp3",
+      },
+      {
+        id: 4,
+        challengeId: 1,
+        text: "meter",
+        correct: false,
+        audioSrc: "/meter.mp3",
+      },
       { id: 5, challengeId: 2, text: "Mass", correct: true },
       { id: 6, challengeId: 2, text: "Weight", correct: false },
       { id: 7, challengeId: 2, text: "Force", correct: true },
       { id: 8, challengeId: 2, text: "Velocity", correct: false },
+      { id: 9, challengeId: 3, text: "kg", correct: true },
+      { id: 10, challengeId: 3, text: "g", correct: false },
+      { id: 11, challengeId: 3, text: "lb", correct: false },
+      { id: 12, challengeId: 3, text: "t", correct: false },
+      { id: 13, challengeId: 4, text: "s = ut + at/2", correct: false },
+      { id: 14, challengeId: 4, text: "v = u + 2as", correct: false },
+      { id: 15, challengeId: 4, text: "v = u + at^2", correct: false },
+      { id: 16, challengeId: 4, text: "v = u + at", correct: true },
     ]);
 
     console.log("Database seeded successfully");
