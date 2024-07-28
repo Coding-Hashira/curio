@@ -11,9 +11,10 @@ import {
   upsertChallengeProgress,
 } from "@/actions/challenge-progress";
 import { toast } from "sonner";
-import { useAudio } from "react-use";
-import Image from "next/image";
+import { useAudio, useMount } from "react-use";
 import { FinishScreen } from "./finish-screen";
+import { useHeartModal } from "@/store/use-hearts-modal";
+import { usePracticeModal } from "@/store/use-practice-modal";
 
 type Props = {
   // initialLessonId={lesson.id}
@@ -39,6 +40,15 @@ export const Quiz = ({
   userSubscription,
 }: Props) => {
   const [correctAudio, _c, correctControls] = useAudio({ src: "/correct.wav" });
+  const { open: openHeartsModal } = useHeartModal();
+  const { open: openPracticeModal } = usePracticeModal();
+
+  useMount(() => {
+    if (initialPercentage === 100) {
+      openPracticeModal();
+    }
+  });
+
   const [incorrectAudio, _i, incorrectControls] = useAudio({
     src: "/incorrect.wav",
   });
@@ -46,7 +56,9 @@ export const Quiz = ({
   const [pending, startTransition] = useTransition();
   const [lessonId, setLessonId] = useState(initialLessonId);
   const [hearts, setHearts] = useState(initialHearts);
-  const [percentage, setPercentage] = useState(initialPercentage);
+  const [percentage, setPercentage] = useState(() => {
+    return initialPercentage === 100 ? 0 : initialPercentage;
+  });
   const [challenges] = useState(initialLessonChallenge);
   const [activeIndex, setActiveIndex] = useState(() => {
     const unCompletedIndex = challenges.findIndex(
@@ -94,7 +106,7 @@ export const Quiz = ({
         upsertChallengeProgress(challenge.id)
           .then((res) => {
             if (res?.error === "hearts") {
-              console.error("Missing hearts");
+              openHeartsModal();
               return;
             }
 
@@ -117,7 +129,7 @@ export const Quiz = ({
         reduceHearts(challenge.id)
           .then((res) => {
             if (res?.error === "hearts") {
-              console.error("Missing hearts");
+              openHeartsModal;
               return;
             }
             incorrectControls.play();
