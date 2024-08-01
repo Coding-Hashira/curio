@@ -1,6 +1,6 @@
 "use client";
 
-import { challengeOptions, challenges } from "@/db/schema";
+import { challengeOptions, challenges, userSubscription } from "@/db/schema";
 import { Header } from "./header";
 import { useState, useTransition } from "react";
 import { QuestionBubble } from "./question-bubble";
@@ -17,11 +17,6 @@ import { useHeartModal } from "@/store/use-hearts-modal";
 import { usePracticeModal } from "@/store/use-practice-modal";
 
 type Props = {
-  // initialLessonId={lesson.id}
-  //   initialLessonChallenge={lesson.challenges}
-  //   initialHearts={userProgress.hearts}
-  //   initialPercentage={initialPercentage}
-  //   userSubscription={null}
   initialLessonId: number;
   initialLessonChallenge: (typeof challenges.$inferSelect & {
     completed: boolean;
@@ -29,7 +24,11 @@ type Props = {
   })[];
   initialHearts: number;
   initialPercentage: number;
-  userSubscription: any; // TODO: Replace with proper types
+  userSubscription:
+    | (typeof userSubscription.$inferSelect & {
+        isActive: boolean;
+      })
+    | null;
 };
 
 export const Quiz = ({
